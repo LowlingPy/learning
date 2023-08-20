@@ -1,7 +1,16 @@
+# #printing shape
+#
+#
+# #mostatil
+#
 # for i in range(1, 10):
 #     print()
 #     for m in range(1, 10):
 #         print('*' , end=' ')
+#
+#
+#
+# #mosalas ghaeme A
 #
 # for i in range(1, 11):
 #
@@ -9,11 +18,20 @@
 #         print('*', end=' ')
 #     print()
 # #
+#
+#
+#
+# #mosalas ghaeme D
+#
 # for i in range(10, 1, -1):
 #     for m in range(0, i-1):
 #         print('*', end=' ')
 #     print()
-
+#
+#
+#
+# #mostatil khali
+#
 # for i in range(10):
 #     for m in range(10):
 #         if i == 0 or i == 9:
@@ -24,21 +42,33 @@
 #             else:
 #                 print('  ', end='')
 #     print()
-
+#
+#
+#
+# #mosalas ghaeme B
+#
 # for i in range(10):
 #     for k in range(10, i, -1):
 #         print(' ',end='')
 #     for m in range(i):
 #         print('*', end='')
 #     print()
+#
+#
+#
+# #mosalas ghaeme C
+#
 # for i in range(10):
 #     for k in range(i):
 #         print(' ', end='')
 #     for m in range(10, i, -1):
 #         print('*', end='')
 #     print()
-
-## test fail
+#
+#
+#
+# # test fail
+#
 # for i in range(20):
 #     if i < 10:
 #         for k in range(10, i, -1):
@@ -62,22 +92,27 @@
 #     for m in range(x,y):
 #         print('* ', end='')
 #     print()
-x = int(input('Please enter a EVEN number: '))
-for i in range(x):
-    for k in range(x, i, -1):
-        print(' ',end='')
-    for m in range(i-1):
-        print('*', end='')
-    for m in range(0, i):
-        print('*', end='')
-    print()
-for i in range(x):
-    for k in range(0, i):
-        print(' ', end='')
-    for m in range(i, x):
-        print('*', end='')
-    for m in range(x-1-i):
-        print('*', end='')
-
-    print()
-#testing git on pycharm windows
+#
+#
+#
+# #lozi
+#
+# x = int(input('Please enter a EVEN number: '))
+# for i in range(x):
+#     for k in range(x, i, -1):
+#         print(' ',end='')
+#     for m in range(i-1):
+#         print('*', end='')
+#     for m in range(0, i):
+#         print('*', end='')
+#     print()
+# for i in range(x):
+#     for k in range(0, i):
+#         print(' ', end='')
+#     for m in range(i, x):
+#         print('*', end='')
+#     for m in range(x-1-i):
+#         print('*', end='')
+#
+#     print()
+# #testing git on pycharm windows
