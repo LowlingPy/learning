@@ -115,4 +115,77 @@
 #         print('*', end='')
 #
 #     print()
+
+
 # #testing git on pycharm windows
+
+
+# just try
+
+# for i in range(10):
+#     for k in range(10, i, -1):
+#             print(' ',end='')
+#     # for m in range(i-1):
+#     #     if i + m == 9:
+#     #         print('*', end='')
+#     for m in range(0, i):
+#         if i + m == 9:
+#             print('*', end='')
+#     for m in range(10, i, -1):
+#         if i + m == 9:
+#             print('*', end='')
+#         else:
+#             print(' ', end='')
+#     for m in range(i):
+#         if i + m == 9:
+#             print('*', end='')
+#         else:
+#             print(' ', end='')
+#
+#
+#     print()
+
+# x = int(input('Please enter a EVEN number: '))
+# for i in range(x):
+#     for k in range(x, i, -1):
+#         print(' ',end='')
+#     for m in range(i-1):
+#         if i + m == x - 1:
+#           print('*', end='')
+#         else:
+#           print(' ', end='')
+#     for m in range(0, i):
+#         if i + x == m :
+#           print('*', end='')
+#         else:
+#           print(' ', end='')
+#     print()
+# for i in range(x):
+#     for k in range(0, i):
+#         print(' ', end='')
+#     for m in range(i, x):
+#         print('*', end='')
+#     for m in range(x-1-i):
+#         print('*', end='')
+#     print()
+
+
+# lozi to khali
+
+x = int(input('Please enter a your number: '))
+for i in range(x):
+    for k in range(x - i, 0, -1):
+        print(' ', end='')
+    print('*', end='')
+    for k in range(2 * i):
+        print(' ', end='')
+    print('*', end='')
+    print()
+for i in range(x):
+    for m in range(i):
+        print(' ', end='')
+    print('*', end='')
+    for k in range(2 * (x - i) - 1, 0, -1):
+        print(' ', end='')
+    print('*', end='')
+    print()
