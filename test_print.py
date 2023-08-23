@@ -172,20 +172,23 @@
 
 # lozi to khali
 
-x = int(input('Please enter a your number: '))
-for i in range(x):
-    for k in range(x - i, 0, -1):
-        print(' ', end='')
-    print('*', end='')
-    for k in range(2 * i):
-        print(' ', end='')
-    print('*', end='')
-    print()
-for i in range(x):
-    for m in range(i):
-        print(' ', end='')
-    print('*', end='')
-    for k in range(2 * (x - i) - 1, 0, -1):
-        print(' ', end='')
-    print('*', end='')
-    print()
+# x = int(input('Please enter a your number: '))
+# for i in range(x):
+#     for k in range(x - i, 0, -1):
+#         print(' ', end='')
+#     print('*', end='')
+#     for k in range(2 * i):
+#         print(' ', end='')
+#     print('*', end='')
+#     print()
+# for i in range(x):
+#     for m in range(i):
+#         print(' ', end='')
+#     print('*', end='')
+#     for k in range(2 * (x - i) - 1, 0, -1):
+#         print(' ', end='')
+#     print('*', end='')
+#     print()
+
+
+# end 21/8/2023
