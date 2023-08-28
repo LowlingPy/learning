@@ -21,7 +21,7 @@ while True:
     if choice == '1':
         count = 0
         random_number = random.randint(0, 1000)
-        print(random_number)
+        # print(random_number)
         while True:
             geuss = int(input('Enter your guess : '))
             count = count + 1
