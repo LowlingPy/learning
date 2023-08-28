@@ -1,5 +1,5 @@
 # Camputer chose a random number and person try to find number
-
+import os
 import random
 
 for i in range(10):
@@ -10,6 +10,12 @@ for i in range(10):
 print()
 
 list_of_scores = []
+if os.path.isfile('data_score.txt'):
+    data_score = open('data_score.txt', 'r')
+    old_score = data_score.read()
+    list_of_scores = old_score.split('$')
+    list_of_scores = [int(x) for x in list_of_scores]
+    data_score.close()
 
 while True:
     print('''
@@ -21,7 +27,7 @@ while True:
     if choice == '1':
         count = 0
         random_number = random.randint(0, 1000)
-        # print(random_number)
+        print(random_number)
         while True:
             geuss = int(input('Enter your guess : '))
             count = count + 1
@@ -34,18 +40,17 @@ while True:
                 list_of_scores.append(count)
                 break
     if choice == '2':
-        # print(list_of_scores)
-        # data_score = open('data_score.txt', 'r')
-        # list_of_scores.append(data_score)
-        # data_score.close()
         sum = 0
+        print(list_of_scores)
         for i in list_of_scores:
             sum = sum + i
         average = sum / len(list_of_scores)
         print(average)
     if choice == '3':
         print('***GOODBYE***')
-        # data_score = open('data_score.txt', 'w')
-        # data_score.writelines(list_of_scores)
-        # data_score.close()
+        list_of_scores = [str(x) for x in list_of_scores]
+        data_score = open('data_score.txt' ,'w')
+        save = '$'.join(list_of_scores)
+        data_score.write(save)
+        data_score.close()
         break
