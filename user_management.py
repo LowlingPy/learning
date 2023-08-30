@@ -1,6 +1,7 @@
 # user password and data
 
 import json
+import random
 
 
 # admin info
@@ -49,7 +50,8 @@ while True:
         2. Add a new user
         3. Delete user
         4. Show user's data
-        5. Save and exit
+        5. Start a game
+        6. Save and exit
         ''')
         choice = input('Enter your short key : ')
 
@@ -87,7 +89,7 @@ while True:
                     users.remove(user)
                     print(f'User {user["username"]} deleted')
 
-# show user's data
+        # show user's data
         elif choice == '4':
             for user in users:
                 username = user['username']
@@ -97,8 +99,24 @@ while True:
 
                 print(f'data of {username} : {data}')
 
-# save and exit
-        elif choice =='5':
+        if choice == '5':
+            count = 0
+            random_number = random.randint(0, 1000)
+            print(random_number)
+            while True:
+                geuss = int(input('Enter your guess : '))
+                count = count + 1
+                if random_number > geuss:
+                    print(f'{geuss} is lower than answer, guess higher')
+                elif random_number < geuss:
+                    print(f'{geuss} is higher than answer, guess lower')
+                else:
+                    print(f'we have a winner the answer is {geuss} ')
+                    user['data'] = user['data'] + f'${count}'
+                    break
+
+        # save and exit
+        elif choice == '6':
             data = open('users_data.txt', 'w')
             save_users = json.dumps(users)
             data.write(save_users)
@@ -106,21 +124,44 @@ while True:
             print('         ***GoodBye***')
             break
 
+
 # user panel
     elif login_user['role'] == 'user':
         print(f'         ***    Welcome {login_user["username"]}    ***')
         print('''
-        1. Show your data
-        2. Edit your profile
+        1. Start a game
+        2. Show your data
+        3. Edit your profile
         ''')
         choice = input('Enter your short key : ')
+
+        # start a game
         if choice == '1':
+            count = 0
+            random_number = random.randint(0, 1000)
+            print(random_number)
+            while True:
+                geuss = int(input('Enter your guess : '))
+                count = count + 1
+                if random_number > geuss:
+                    print(f'{geuss} is lower than answer, guess higher')
+                elif random_number < geuss:
+                    print(f'{geuss} is higher than answer, guess lower')
+                else:
+                    print(f'we have a winner the answer is {geuss} ')
+                    user['data'] = user['data'] + f'${count}'
+                    break
+
+        # show data
+        if choice == '2':
             if login_user['data'] is not None:
                 data = login_user['data'].split('$')
                 print(f'Your data : {data}')
             else:
                 print('You have no data')
-        elif choice == '2':
+
+        # edite profile
+        elif choice == '3':
             while True:
                 print(f'''
                 1. Edit Username({login_user["username"]})
