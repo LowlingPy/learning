@@ -89,7 +89,7 @@ while True:
                     users.remove(user)
                     print(f'User {user["username"]} deleted')
 
-        # show user's data
+# show user's data
         elif choice == '4':
             for user in users:
                 username = user['username']
@@ -98,7 +98,7 @@ while True:
                     data = user['data'].split('$')
 
                 print(f'data of {username} : {data}')
-
+        # start a game
         if choice == '5':
             count = 0
             random_number = random.randint(0, 1000)
@@ -112,7 +112,11 @@ while True:
                     print(f'{geuss} is higher than answer, guess lower')
                 else:
                     print(f'we have a winner the answer is {geuss} ')
-                    user['data'] = user['data'] + f'${count}'
+                    list_of_score = user['data'].split('$')
+                    count = str(count)
+                    list_of_score.append(count)
+                    str_of_score = '$'.join(list_of_score)
+                    user['data'] = str_of_score
                     break
 
         # save and exit
@@ -123,7 +127,6 @@ while True:
             data.close()
             print('         ***GoodBye***')
             break
-
 
 # user panel
     elif login_user['role'] == 'user':
@@ -149,7 +152,13 @@ while True:
                     print(f'{geuss} is higher than answer, guess lower')
                 else:
                     print(f'we have a winner the answer is {geuss} ')
-                    user['data'] = user['data'] + f'${count}'
+                    list_of_score = []
+                    if user['data'] is not None:
+                        list_of_score = user['data'].split('$')
+                    count = str(count)
+                    list_of_score.append(count)
+                    str_of_score = '$'.join(list_of_score)
+                    user['data'] = str_of_score
                     break
 
         # show data
