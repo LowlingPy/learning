@@ -115,7 +115,9 @@ while True:
         if choice == '5':
             count = 0
             random_number = random.randint(0, 1000)
-            print(random_number)
+
+            # #cheat
+            # print(random_number)
             while True:
                 geuss = int(input('     Enter your guess(0,1000): '))
                 count = count + 1
@@ -157,7 +159,9 @@ while True:
         if choice == '1':
             count = 0
             random_number = random.randint(0, 1000)
-            print(random_number)
+
+            # #cheat
+            # print(random_number)
             while True:
                 geuss = int(input('     Enter your guess : '))
                 count = count + 1
