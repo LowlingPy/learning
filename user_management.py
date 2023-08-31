@@ -2,11 +2,13 @@
 
 import json
 import random
-from getpass import getpass
+
+# from getpass import getpass
+
 
 # admin info
 users = [
-     {
+    {
         'username': 'milad',
         'password': '123',
         'data': '2$5$4',
@@ -24,7 +26,7 @@ if data:
 file.close()
 
 username = input('  Enter your username: ')
-password = getpass('  Enter your password: ')
+password = input('  Enter your password: ')
 for user in users:
     if username.lower() == user['username'].lower():
         if password == user['password']:
