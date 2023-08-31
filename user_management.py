@@ -145,9 +145,9 @@ while True:
         elif choice == '6':
             while True:
                 print(f'''
-                1. Edit Username({login_user["username"]})
-                2. Edit Name({login_user["name"]})
-                3. Edit Lastname({login_user["lastname"]})
+                1. Edit Username({login_user['username']})
+                2. Edit Name({login_user['name']})
+                3. Edit Lastname({login_user['lastname']})
                 4. Edit your password
                 5. Back to Main menu
                 ''')
@@ -235,9 +235,9 @@ while True:
         elif choice == '3':
             while True:
                 print(f'''
-                1. Edit Username({login_user["username"]})
-                2. Edit Name({login_user["name"]})
-                3. Edit Lastname({login_user["lastname"]})
+                1. Edit Username({login_user['username']})
+                2. Edit Name({login_user['name']})
+                3. Edit Lastname({login_user['lastname']})
                 4. Edit your password
                 5. Back to Main menu
                 ''')
