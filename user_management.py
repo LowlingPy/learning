@@ -51,7 +51,8 @@ while True:
         3. Delete user
         4. Show user's data
         5. Start a game
-        6. Save and exit
+        6. Edit your profile
+        7. Save and exit
         ''')
         choice = input('    Enter your short key: ')
 
@@ -114,7 +115,7 @@ while True:
                 else:
                     print(f'{username} has no score')
         # start a game
-        if choice == '5':
+        elif choice == '5':
             count = 0
             random_number = random.randint(0, 1000)
 
@@ -138,8 +139,40 @@ while True:
                     login_user['data'] = str_of_score
                     break
 
-        # save and exit
+        # edit profile
         elif choice == '6':
+            while True:
+                print(f'''
+                1. Edit Username({login_user["username"]})
+                2. Edit Name({login_user["name"]})
+                3. Edit Lastname({login_user["lastname"]})
+                4. Edit your password
+                5. Back to Main menu
+                ''')
+                choice_edit = input('   Enter your short key : ')
+                if choice_edit == '1':
+                    new_username = input('  Enter your new username : ').lower()
+                    login_user['username'] = new_username
+                elif choice_edit == '2':
+                    new_name = input('  Enter your new name : ').lower()
+                    login_user['name'] = new_name
+                elif choice_edit == '3':
+                    new_lastname = input('  Enter your new lastname : ').lower()
+                    login_user['lastname'] = new_lastname
+                elif choice_edit == '4':
+                    password_check = getpass('  Enter your password: ')
+                    if password_check == login_user['password']:
+                        new_password = getpass('  Enter you new password : ')
+                        login_user['password'] = new_password
+                elif choice_edit == '5':
+                    edited_data = open('users_data.txt', 'w')
+                    save = json.dumps(users)
+                    edited_data.write(save)
+                    edited_data.close()
+                    break
+
+        # save and exit
+        elif choice == '7':
             data = open('users_data.txt', 'w')
             save_users = json.dumps(users)
             data.write(save_users)
@@ -184,7 +217,7 @@ while True:
                     break
 
         # show score
-        if choice == '2':
+        elif choice == '2':
             list_of_score = []
             if login_user['data'] is not None:
                 list_of_score = login_user['data'].split('$')
