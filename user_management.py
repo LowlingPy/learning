@@ -2,7 +2,7 @@
 
 import json
 import random
-
+from getpass import getpass
 
 # admin info
 users = [
@@ -24,7 +24,7 @@ if data:
 file.close()
 
 username = input('  Enter your username: ')
-password = input('  Enter your password: ')
+password = getpass('  Enter your password: ')
 for user in users:
     if username.lower() == user['username'].lower():
         if password == user['password']:
@@ -58,7 +58,9 @@ while True:
 # show users
         if choice == '1':
             for user in users:
-                print(user['username'].capitalize())
+                username = user['username'].capitalize()
+                user_role = user['role'].capitalize()
+                print(f'{username} is {user_role}')
 
 # add user
         elif choice == '2':
@@ -128,11 +130,12 @@ while True:
                 else:
                     print(f'we have a winner the answer is {geuss} ')
                     list_of_score = []
-                    list_of_score = user['data'].split('$')
+                    if login_user['data'] is not None:
+                        list_of_score = login_user['data'].split('$')
                     count = str(count)
                     list_of_score.append(count)
                     str_of_score = '$'.join(list_of_score)
-                    user['data'] = str_of_score
+                    login_user['data'] = str_of_score
                     break
 
         # save and exit
@@ -163,7 +166,7 @@ while True:
             # #cheat
             # print(random_number)
             while True:
-                geuss = int(input('     Enter your guess : '))
+                geuss = int(input('     Enter your guess(0,1000): '))
                 count = count + 1
                 if random_number > geuss:
                     print(f'{geuss} is lower than answer, guess higher')
@@ -172,12 +175,12 @@ while True:
                 else:
                     print(f'we have a winner the answer is {geuss} ')
                     list_of_score = []
-                    if user['data'] is not None:
-                        list_of_score = user['data'].split('$')
+                    if login_user['data'] is not None:
+                        list_of_score = login_user['data'].split('$')
                     count = str(count)
                     list_of_score.append(count)
                     str_of_score = '$'.join(list_of_score)
-                    user['data'] = str_of_score
+                    login_user['data'] = str_of_score
                     break
 
         # show score
