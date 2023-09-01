@@ -3,8 +3,6 @@
 import json
 import random
 
-# from getpass import getpass
-
 
 # admin info
 users = [
