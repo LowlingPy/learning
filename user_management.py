@@ -162,9 +162,9 @@ while True:
                     new_lastname = input('  Enter your new lastname : ').lower()
                     login_user['lastname'] = new_lastname
                 elif choice_edit == '4':
-                    password_check = getpass('  Enter your password: ')
+                    password_check = input('  Enter your password: ')
                     if password_check == login_user['password']:
-                        new_password = getpass('  Enter you new password : ')
+                        new_password = input('  Enter you new password : ')
                         login_user['password'] = new_password
                 elif choice_edit == '5':
                     edited_data = open('users_data.txt', 'w')
