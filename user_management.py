@@ -38,6 +38,7 @@ else:
     exit()
 
 while True:
+
 # admin panel
     if login_user['role'] == 'admin':
         login_username = login_user['username'].capitalize()
@@ -114,30 +115,32 @@ while True:
                     print(f'{username} : {score}')
                 else:
                     print(f'{username} has no score')
+
         # start a game
         elif choice == '5':
-            count = 0
-            random_number = random.randint(0, 1000)
-
-            # #cheat
-            # print(random_number)
-            while True:
-                geuss = int(input('     Enter your guess(0,1000): '))
-                count = count + 1
-                if random_number > geuss:
-                    print(f'{geuss} is lower than answer, guess higher')
-                elif random_number < geuss:
-                    print(f'{geuss} is higher than answer, guess lower')
-                else:
-                    print(f'we have a winner the answer is {geuss} ')
-                    list_of_score = []
-                    if login_user['data'] is not None:
-                        list_of_score = login_user['data'].split('$')
-                    count = str(count)
-                    list_of_score.append(count)
-                    str_of_score = '$'.join(list_of_score)
-                    login_user['data'] = str_of_score
-                    break
+            def game():
+                count = 0
+                random_number = random.randint(0, 1000)
+                # #cheat
+                # print(random_number)
+                while True:
+                    geuss = int(input('     Enter your guess(0,1000): '))
+                    count = count + 1
+                    if random_number > geuss:
+                        print(f'{geuss} is lower than answer, guess higher')
+                    elif random_number < geuss:
+                        print(f'{geuss} is higher than answer, guess lower')
+                    else:
+                        print(f'we have a winner the answer is {geuss} ')
+                        list_of_score = []
+                        if login_user['data'] is not None:
+                            list_of_score = login_user['data'].split('$')
+                        count = str(count)
+                        list_of_score.append(count)
+                        str_of_score = '$'.join(list_of_score)
+                        login_user['data'] = str_of_score
+                        break
+            game()
 
         # edit profile
         elif choice == '6':
@@ -193,28 +196,7 @@ while True:
 
         # start a game
         if choice == '1':
-            count = 0
-            random_number = random.randint(0, 1000)
-
-            # #cheat
-            # print(random_number)
-            while True:
-                geuss = int(input('     Enter your guess(0,1000): '))
-                count = count + 1
-                if random_number > geuss:
-                    print(f'{geuss} is lower than answer, guess higher')
-                elif random_number < geuss:
-                    print(f'{geuss} is higher than answer, guess lower')
-                else:
-                    print(f'we have a winner the answer is {geuss} ')
-                    list_of_score = []
-                    if login_user['data'] is not None:
-                        list_of_score = login_user['data'].split('$')
-                    count = str(count)
-                    list_of_score.append(count)
-                    str_of_score = '$'.join(list_of_score)
-                    login_user['data'] = str_of_score
-                    break
+            game()
 
         # show score
         elif choice == '2':
