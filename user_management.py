@@ -23,7 +23,6 @@ if data:
 
 file.close()
 
-
 def game():
     count = 0
     random_number = random.randint(0, 1000)
@@ -47,15 +46,12 @@ def game():
             login_user['data'] = str_of_score
             break
 
-
 def show_users():
-
 
     for user in users:
         username = user['username'].capitalize()
         user_role = user['role'].capitalize()
         print(f'{username} is {user_role}')
-
 
 def add_user():
     if login_user['role'] == 'admin':
@@ -83,14 +79,12 @@ def add_user():
     else:
         print('You have no permission for add new user, Sorry')
 
-
 def delete_user():
     delete_user = input('   Enter username you want delete: ').lower()
     for user in users:
         if ('username', delete_user) in user.items():
             users.remove(user)
             print(f'{user["username"]} deleted')
-
 
 def show_users_data():
     for user in users:
@@ -107,7 +101,6 @@ def show_users_data():
             print(f'{username} : {score}')
         else:
             print(f'{username} has no score')
-
 
 def edit_profile():
     while True:
@@ -140,14 +133,12 @@ def edit_profile():
             edited_data.close()
             break
 
-
 def save_and_exit():
     data = open('users_data.txt', 'w')
     save_users = json.dumps(users)
     data.write(save_users)
     data.close()
     print('         ***GoodBye***')
-
 
 def show_score():
     list_of_score = []
@@ -160,7 +151,6 @@ def show_score():
         print(f'Your score : {score}')
     else:
         print('You have no data')
-
 
 username = input('  Enter your username: ')
 password = input('  Enter your password: ')
