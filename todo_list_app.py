@@ -1,4 +1,4 @@
-# This a applition for your TODO list and manage your tasks
+# This a applition for your todo list and manage your tasks
 import json
 
 todo_lists = [
@@ -18,7 +18,7 @@ file.close()
 while True:
     print('****     Do all of them now, not tomorrow     ****')
     print('''
-    1. Creat a new TODO list
+    1. Create a new TODO list
     2. Open a TODO list
     3. Delete a TODO list
     4. Save and Exit
