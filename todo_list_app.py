@@ -1,28 +1,99 @@
 # This a applition for your todo list and manage your tasks
 import json
 
-todo_lists = [
-    {
-        'listname': None,
-        'done_task': None,
-        'undone_task': None,
-    }
-]
-file = open('todo_list.txt', 'r')
-data = file.read()
 
-if data:
-    todo_lists = json.loads(data)
-file.close()
+def inti():
+    todo_lists = [
+        {
+            'listname': 'test1',
+            'done_task': [
+                {
+                    'id': 1,
+                 'task': 'Test task'
+                }
+            ],
+            'undone_task': [
+                {
+                    'id' : 2,
+                    'task': 'Test task'
+                }
+            ],
+        }
+
+    ]
+    file = open('todo_list.txt', 'r')
+    data = file.read()
+
+    if data:
+        todo_lists = json.loads(data)
+    file.close()
+    return todo_lists
+
+
+def main_menu():
+    main_menu_list = [
+        'Create a new TODO list',
+        'Open a TODO list',
+        'Delete a TODO list',
+        'Save and Exit'
+    ]
+    return main_menu_list
+
+
+def create_list():
+    pass
+
+
+def list_menu():
+    sub_menu_list = [
+         'Show your tasks',
+         'Change status',
+         'Edit tasks',
+         'Save and back to Main Menu',
+         'Save and Exit'
+    ]
+    return sub_menu_list
+
+
+def show_tasks():
+    task_list = [
+        'All',
+        'Done',
+        'Undone',
+    ]
+    return task_list
+
+
+def change_status():
+    status_list = [
+        'Make done',
+        'Make undone'
+    ]
+    return status_list
+
+
+def edit_task():
+    edit_list = [
+        'Remove a task',
+         'Add a task'
+    ]
+    return edit_list
+
+def save_and_back():
+    pass
+
+
+def save_and_exit():
+    pass
+
+
+def delete_list():
+    pass
+
 
 while True:
     print('****     Do all of them now, not tomorrow     ****')
-    print('''
-    1. Create a new TODO list
-    2. Open a TODO list
-    3. Delete a TODO list
-    4. Save and Exit
-    ''')
+
     choice = input('Enter of them number ->')
 
     if choice == '1':
@@ -52,21 +123,11 @@ while True:
             else:
                 print('List not found')
         while True:
-            print('''
-            1. Show your tasks
-            2. Change status
-            3. Edit tasks
-            4. Save and back to Main Menu
-            5. Save and Exit
-            ''')
+
             choice = input('Enter of them number ->')
 
             if choice == '1':
-                print('''
-                1. All
-                2. Done
-                3. Undone
-                ''')
+
                 choice = input('Enter of them number ->')
                 done = '\n'.join(list_sel['done_task'])
                 undone = '\n'.join(list_sel['undone_task'])
@@ -77,36 +138,26 @@ while True:
                 elif choice == '3':
                     print(f'Undone:\n{undone}')
             elif choice == '2':
-                print('''
-                1. Make done
-                2. Make undone
-                ''')
-                choice = input('Enter of them number ->')
 
+                choice = input('Enter of them number ->')
                 if choice == '1':
 
                 elif choice == '2':
 
             elif choice == '3':
-                print('''
-                1. Remove a task
-                2. Add a task
-                ''')
-                choice = input('Enter of them number ->')
 
+                choice = input('Enter of them number ->')
                 if choice == '1':
 
                 elif choice == '2':
 
             elif choice == '4':
-
                 break
-            elif choice == '5':
 
-                exit()
+            elif choice == '5':
 
     elif choice == '3':
 
     elif choice == '4':
 
-        exit()
+
