@@ -4,39 +4,76 @@ import json
 import random
 
 
-# admin info
-users = [
-    {
-        'username': 'milad',
-        'password': '123',
-        'data': '2$5$4',
-        'role': 'admin',
-        'name': None,
-        'lastname': None
-    }
-]
+def init():
+    # admin info
+    users = [
+        {
+            'username': 'milad',
+            'password': '123',
+            'data': '2$5$4',
+            'role': 'admin',
+            'name': None,
+            'lastname': None
+        }
+    ]
 
-file = open('users_data.txt', 'r')
-data = file.read()
-if data:
-    users = json.loads(data)
+    file = open('users_data.txt', 'r')
+    data = file.read()
+    if data:
+        users = json.loads(data)
 
-file.close()
+    file.close()
+    return users
 
-def game():
+
+def get_role(user):
+    if user['role'] == 'admin':
+        return 'admin'
+    elif user['role'] == 'user':
+        return 'user'
+    else:
+        return None
+
+
+def menu(user_role, name):
+    if user_role == 'admin':
+        print(f'''
+                    ***     Welcome {name}     ***
+                    ###     ADMIN PANEL     ###
+        ''')
+        return [
+            'Show users',
+            'Add a new user',
+            'Delete user',
+            'Show user\'s data',
+            'Start a game',
+            'Edit your profile',
+            'Save and exit'
+        ]
+    elif user_role == 'user':
+        print(f'         ***    Welcome {name}    ***')
+        return [
+                'Start a game',
+                'Show your score',
+                'Edit your profile',
+                'Save and exit'
+        ]
+
+
+def game(login_user):
     count = 0
     random_number = random.randint(0, 1000)
     # #cheat
     # print(random_number)
     while True:
-        geuss = int(input('     Enter your guess(0,1000): '))
+        guess = int(input('     Enter your guess(0,1000): '))
         count = count + 1
-        if random_number > geuss:
-            print(f'{geuss} is lower than answer, guess higher')
-        elif random_number < geuss:
-            print(f'{geuss} is higher than answer, guess lower')
+        if random_number > guess:
+            print(f'{guess} is lower than answer, guess higher')
+        elif random_number < guess:
+            print(f'{guess} is higher than answer, guess lower')
         else:
-            print(f'we have a winner the answer is {geuss} ')
+            print(f'we have a winner the answer is {guess} ')
             list_of_score = []
             if login_user['data'] is not None:
                 list_of_score = login_user['data'].split('$')
@@ -46,197 +83,237 @@ def game():
             login_user['data'] = str_of_score
             break
 
-def show_users():
 
+def get_clean_users(users):
+    list_clean_users = []
     for user in users:
         username = user['username'].capitalize()
         user_role = user['role'].capitalize()
-        print(f'{username} is {user_role}')
+        clean_users_data = f'{username} is {user_role}'
+        list_clean_users.append(clean_users_data)
+    return list_clean_users
 
-def add_user():
-    if login_user['role'] == 'admin':
-        new_user = {}
-        new_username = input('  Enter new username: ').lower()
-        new_password = input('  Enter new user password: ')
-        while True:
-            new_role = input('  Role (User/Admin): ').lower()
-            if new_role == 'admin':
-                new_user.update(
-                    {'username': new_username, 'password': new_password, 'data': None, 'role': 'admin',
-                     'name': None, 'lastname': None})
-                users.append(new_user)
-                print(f'New admin ({new_username}) added ')
-                break
-            elif new_role == 'user':
-                new_user.update(
-                    {'username': new_username, 'password': new_password, 'data': None, 'role': 'user',
-                     'name': None, 'lastname': None})
-                users.append(new_user)
-                print(f'New user ({new_username}) added ')
-                break
-            else:
-                print('Role not valid, Try again')
-    else:
-        print('You have no permission for add new user, Sorry')
 
-def delete_user():
-    delete_user = input('   Enter username you want delete: ').lower()
+def add_user(username, password, users, role_new):
+    new_user = {}
+    new_user.update(
+        {'username': username, 'password': password, 'data': None, 'role': role_new, 'name': None, 'lastname': None}
+    )
+    users.append(new_user)
+    return f'New {role_new} ({username.capitalize()}) added '
+
+
+def delete_users(users, user_will_be_deleted):
     for user in users:
-        if ('username', delete_user) in user.items():
+        if user['username'] == user_will_be_deleted:
             users.remove(user)
-            print(f'{user["username"]} deleted')
+    return f'{user_will_be_deleted.capitalize()} is deleted '
 
-def show_users_data():
+
+def show_users_data(users):
     for user in users:
         username = user['username']
-        list_of_score = []
-        if user['data'] is not None:
-            list_of_score = user['data'].split('$')
-            print(f'Data of {username} : {list_of_score}')
-            list_of_score = user['data'].split('$')
-            sum = 0
-            for i in list_of_score:
-                sum = sum + int(i)
-            score = sum / len(list_of_score)
-            print(f'{username} : {score}')
-        else:
-            print(f'{username} has no score')
+        list_of_score = user['data'].split('$')
+        sum_ = 0
+        for i in list_of_score:
+            sum_ = sum_ + int(i)
+        score = sum_ / len(list_of_score)
+        return f'{username} : {score}'
 
-def edit_profile():
-    while True:
-        print(f'''
-                   1. Edit Username({login_user['username']})
-                   2. Edit Name({login_user['name']})
-                   3. Edit Lastname({login_user['lastname']})
-                   4. Edit your password
-                   5. Back to Main menu
-                   ''')
-        choice_edit = input('   Enter your short key : ')
-        if choice_edit == '1':
-            new_username = input('  Enter your new username : ').lower()
-            login_user['username'] = new_username
-        elif choice_edit == '2':
-            new_name = input('  Enter your new name : ').lower()
-            login_user['name'] = new_name
-        elif choice_edit == '3':
-            new_lastname = input('  Enter your new lastname : ').lower()
-            login_user['lastname'] = new_lastname
-        elif choice_edit == '4':
-            password_check = input('  Enter your password: ')
-            if password_check == login_user['password']:
-                new_password = input('  Enter you new password : ')
-                login_user['password'] = new_password
-        elif choice_edit == '5':
-            edited_data = open('users_data.txt', 'w')
-            save = json.dumps(users)
-            edited_data.write(save)
-            edited_data.close()
-            break
 
-def save_and_exit():
+def edit_profile_menu(login_user):
+    return [
+        f'Edit Username ({login_user["username"]})',
+        f'Edit Name ({login_user["name"]})',
+        f'Edit Lastname({login_user["lastname"]})',
+        'Edit your password',
+        'Back to Main menu'
+    ]
+
+
+def change_username(login_user, new_username_def):
+    return login_user['username'] == new_username_def
+
+
+def change_name(login_user, new_name_def):
+    return login_user['name'] == new_name_def
+
+
+def change_lastname(login_user, new_lastname_def):
+    return login_user['lastname'] == new_lastname_def
+
+
+def change_password(login_user, new_password_def, check_password_def):
+    if check_password_def == login_user['password']:
+        return login_user['password'] == new_password_def
+
+
+def edit_profile_save(users):
+    edited_data = open('users_data.txt', 'w')
+    save = json.dumps(users)
+    edited_data.write(save)
+    edited_data.close()
+
+
+def save_and_exit(users):
     data = open('users_data.txt', 'w')
     save_users = json.dumps(users)
     data.write(save_users)
     data.close()
     print('         ***GoodBye***')
 
-def show_score():
-    list_of_score = []
+
+def show_score(login_user):
     if login_user['data'] is not None:
         list_of_score = login_user['data'].split('$')
-        sum = 0
+        sum_ = 0
         for i in list_of_score:
-            sum = sum + int(i)
-        score = sum / len(list_of_score)
-        print(f'Your score : {score}')
+            sum_ = sum_ + int(i)
+        score = sum_ / len(list_of_score)
+        return f'Your score : {score}'
     else:
-        print('You have no data')
+        return 'You have no data'
 
-username = input('  Enter your username: ')
-password = input('  Enter your password: ')
-for user in users:
-    if username.lower() == user['username'].lower():
-        if password == user['password']:
-            login_user = user
-            break
-        else:
-            print('incorrect password')
-            exit()
-else:
-    print('user not found')
+
+def login(username, password, users):
+    for user in users:
+        if username.lower() == user['username'].lower():
+            if password == user['password']:
+                return True, user
+            else:
+                return False, 'Wrong password'
+
+    else:
+        return False, 'User not found'
+
+
+all_user = init()
+enter_username = input('  Enter your username: ')
+enter_password = input('  Enter your password: ')
+status, result = login(enter_username, enter_password, all_user)
+if status is False:
+    print(result)
+    exit()
+user_in_app = result
+role = get_role(user_in_app)
+if role is None:
+    print('Invalid role user ')
     exit()
 
 while True:
-# admin panel
-    if login_user['role'] == 'admin':
-        login_username = login_user['username'].capitalize()
-        print(f'''
-                    ***     Welcome {login_username}     ***
-                    ###     ADMIN PANEL     ###
-        ''')
-        print('''
-        1. Show users
-        2. Add a new user
-        3. Delete user
-        4. Show user's data
-        5. Start a game
-        6. Edit your profile
-        7. Save and exit
-        ''')
-        choice = input('    Enter your short key: ')
+    # admin panel
+    show_menu = menu(role, user_in_app['username'].capitalize())
+    for index, item in enumerate(show_menu):
+        print(f'{index + 1}. {item}')
 
+    if role == 'admin':
+        choice = input('    Enter your short key: ')
         # show users
         if choice == '1':
-            show_users()
-
+            for item in get_clean_users(all_user):
+                print(item)
         # add user
         elif choice == '2':
-            add_user()
+            new_username = input('  Enter new username: ').lower()
+            new_password = input('  Enter new user password: ')
+            while True:
+                new_role = input('  Role (User/Admin): ').lower()
+                if new_role == 'admin' or new_role == 'user':
+                    print(add_user(new_username, new_password, all_user, new_role))
+                    break
+                print('Role not valid, Try again')
+
         # delete user
         elif choice == '3':
-            delete_user()
-
+            delete_user = input('   Enter username you want delete: ').lower()
+            for exist_user in all_user:
+                if exist_user['username'] == delete_user:
+                    print(delete_users(all_user, delete_user))
+                    break
+            else:
+                print('user not found')
         # show user's data
         elif choice == '4':
-            show_users_data()
+            print(show_users_data(all_user))
 
         # start a game
         elif choice == '5':
-            game()
+            game(user_in_app)
 
         # edit profile
         elif choice == '6':
-            edit_profile()
+            while True:
+                show_edit_menu = edit_profile_menu(user_in_app)
+                for index, item in enumerate(show_edit_menu):
+                    print(f'{index + 1}. {item}')
+                choice_edit = input('   Enter your short key : ')
+                if choice_edit == '1':
+                    new_username = input('  Enter your new username : ').lower()
+                    change_username(user_in_app, new_username)
+
+                elif choice_edit == '2':
+                    new_name = input('  Enter your new name : ').lower()
+                    change_name(user_in_app, new_name)
+
+                elif choice_edit == '3':
+                    new_lastname = input('  Enter your new lastname : ').lower()
+                    change_lastname(user_in_app, new_lastname)
+
+                elif choice_edit == '4':
+                    password_check = input('  Enter your password : ')
+                    new_password = input('  Enter you new password : ')
+                    change_password(user_in_app, new_password, password_check)
+
+                elif choice_edit == '5':
+                    edit_profile_save(all_user)
+                    break
 
         # save and exit
         elif choice == '7':
-            save_and_exit()
+            save_and_exit(all_user)
             break
 
 # user panel
-    elif login_user['role'] == 'user':
-        print(f'         ***    Welcome {login_user["username"]}    ***')
-        print('''
-        1. Start a game
-        2. Show your score
-        3. Edit your profile
-        4. Save and exit
-        ''')
+    elif role == 'user':
         choice = input('    Enter your short key : ')
 
         # start a game
         if choice == '1':
-            game()
+            game(user_in_app)
 
         # show score
         elif choice == '2':
-            show_score()
+            print(show_users_data(user_in_app))
 
         # edite profile
         elif choice == '3':
-            edit_profile()
+            while True:
+                show_edit_menu = edit_profile_menu(user_in_app)
+                for index, item in enumerate(show_edit_menu):
+                    print(f'{index + 1}. {item}')
+                choice_edit = input('   Enter your short key : ')
+                if choice_edit == '1':
+                    new_username = input('  Enter your new username : ').lower()
+                    change_username(user_in_app, new_username)
+
+                elif choice_edit == '2':
+                    new_name = input('  Enter your new name : ').lower()
+                    change_name(user_in_app, new_name)
+
+                elif choice_edit == '3':
+                    new_lastname = input('  Enter your new lastname : ').lower()
+                    change_lastname(user_in_app, new_lastname)
+
+                elif choice_edit == '4':
+                    password_check = input('  Enter your password : ')
+                    new_password = input('  Enter you new password : ')
+                    change_password(user_in_app, new_password, password_check)
+
+                elif choice_edit == '5':
+                    edit_profile_save(all_user)
+                    break
 
         # save and exit
         elif choice == '4':
-            save_and_exit()
+            save_and_exit(all_user)
             break
