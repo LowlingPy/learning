@@ -74,8 +74,11 @@ def save():
     data.close()
 
 
-def delete_list():
-    pass
+def delete_list(target_list, all_lists):
+    for list in all_lists:
+        if list['listname'] == target_list:
+            all_lists.remove(list)
+            break
 
 def task_tup(requst, selected_dic):
     done_list = selected_dic['done_task']
@@ -200,6 +203,7 @@ while True:
                 exit()
 
     elif choice == '3':
+        del_list = input('')
         delete_list()
 
     elif choice == '4':
