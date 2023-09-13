@@ -5,7 +5,7 @@ import os
 
 
 def inti():
-    data_lists =[]
+    data_lists = []
     if os.path.exists('todo_list.txt'):
         file = open('todo_list.txt', 'r')
         data = file.read()
@@ -67,9 +67,9 @@ def edit_task():
     return edit_list
 
 
-def save():
+def save(data_list):
     data = open('todo_list.txt', 'w')
-    save = json.dumps(todo_lists)
+    save = json.dumps(data_list)
     data.write(save)
     data.close()
 
@@ -83,11 +83,11 @@ def delete_list(target_list, all_lists):
 def task_tup(requst, selected_dic):
     done_list = selected_dic['done_task']
     undone_list = selected_dic['undone_task']
-    all = done_list + undone_list
+    all_task_list = done_list + undone_list
     dic_to_tup = []
     # show all
     if requst == 'all':
-        for item in all:
+        for item in all_task_list:
             dic_to_tup = item.items()
 
     # show done
@@ -103,8 +103,8 @@ def task_tup(requst, selected_dic):
     return  dic_to_tup
 
 
+todo_lists = inti()
 while True:
-    todo_lists = inti()
     print('****     Do all of them now, not tomorrow     ****')
     for index, item in enumerate(main_menu()):
         print(f'{index + 1}. {item}')
@@ -195,11 +195,11 @@ while True:
                     dic_sel['undone_task'].append(new_task)
 
             elif choice == '4':
-                save()
+                save(todo_lists)
                 break
 
             elif choice == '5':
-                save()
+                save(todo_lists)
                 exit()
 
     elif choice == '3':
@@ -207,7 +207,7 @@ while True:
         delete_list()
 
     elif choice == '4':
-        save()
+        save(todo_lists)
         exit()
 
 
