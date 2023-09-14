@@ -4,7 +4,7 @@ import json
 import os
 
 
-def inti():
+def init():
     data_lists = []
     if os.path.exists('todo_list.txt'):
         file = open('todo_list.txt', 'r')
@@ -27,17 +27,23 @@ def main_menu():
     return main_menu_list
 
 
-def create_list():
-    pass
+def create_list(name):
+    new_list = {
+        'listname': name,
+        'done_task': [],
+        'undone_task': [],
+        'counter': 0
+    }
+    return new_list
 
 
 def list_menu():
     sub_menu_list = [
-         'Show your tasks',
-         'Change status',
-         'Edit tasks',
-         'Save and back to Main Menu',
-         'Save and Exit'
+        'Show your tasks',
+        'Change status',
+        'Manage tasks',
+        'Save and back to Main Menu',
+        'Save and Exit'
     ]
     return sub_menu_list
 
@@ -59,12 +65,20 @@ def change_status():
     return status_list
 
 
-def edit_task():
+def manage_task():
     edit_list = [
         'Remove a task',
-         'Add a task'
+        'Add a task'
     ]
     return edit_list
+
+
+def add_task(task, selected_dic):
+    new_task = {}
+    new_task['task'] = task
+    selected_dic['counter'] += 1
+    new_task['id'] = selected_dic['counter']
+    selected_dic['undone_task'].append(new_task)
 
 
 def save(data_list):
@@ -80,6 +94,7 @@ def delete_list(target_list, all_lists):
             all_lists.remove(list)
             break
 
+
 def task_tup(requst, selected_dic):
     done_list = selected_dic['done_task']
     undone_list = selected_dic['undone_task']
@@ -88,22 +103,31 @@ def task_tup(requst, selected_dic):
     # show all
     if requst == 'all':
         for item in all_task_list:
-            dic_to_tup = item.items()
+            task = item['task']
+            id = item['id']
+            x = (task, id)
+            dic_to_tup.append(x)
 
     # show done
     elif requst == 'done':
         for item in done_list:
-            dic_to_tup = item.items()
+            task = item['task']
+            id = item['id']
+            x = (task, id)
+            dic_to_tup.append(x)
 
     # show undone
     elif requst == 'undone':
         for item in undone_list:
-            dic_to_tup = item.items()
+            task = item['task']
+            id = item['id']
+            x = (task, id)
+            dic_to_tup.append(x)
 
     return  dic_to_tup
 
 
-todo_lists = inti()
+todo_lists = init()
 while True:
     print('****     Do all of them now, not tomorrow     ****')
     for index, item in enumerate(main_menu()):
@@ -112,26 +136,19 @@ while True:
     #create a new list
     if choice == '1':
         list_name = input('New list name? ').lower()
-        new_list = {
-            'listname': list_name,
-            'done_task': [],
-            'undone_task': [],
-        }
-
+        new_list = create_list(list_name)
         # add or not task to new list
         while True:
-            answer = input('Add a task?(Yes/No) ').lower()
-            if answer in ['yes', 'y', '\n']:
-                new_task = {}
-                new_task['task'] = input('Write your task: ')
-                counter = len(new_list['done_task'] + new_list['undone_task'])
-                new_task['id'] = counter + 1
-                new_list['undone_task'].append(new_task)
+            answer = input('Add a task?(Yes/no) ').lower()
+            if answer in ['yes', 'y', '']:
+                write_task = input('Write your task: ')
+                add_task(write_task, new_list)
 
             elif answer in ['no', 'n', 'nope']:
                 break
 
         todo_lists.append(new_list)
+
     #open list
     elif choice == '2':
         dic_sel = input('Enter your TODO lis name: ').lower()
@@ -179,7 +196,7 @@ while True:
 
             #edit task
             elif choice == '3':
-                for index, item in enumerate(edit_task()):
+                for index, item in enumerate(manage_task()):
                     print(f'{index + 1}. {item}')
                 choice = input('Enter number ->')
                 #remove
