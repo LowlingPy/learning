@@ -2,6 +2,7 @@
 
 import json
 import random
+import bcrypt
 
 
 def init():
@@ -9,7 +10,7 @@ def init():
     users = [
         {
             'username': 'milad',
-            'password': '123',
+            'password': "b'$2b$12$QiD3DeYmnd4SEAs8go7zIenUO2lbPslY13FEWvurMiQvXuel1uwkq'",
             'data': '2$5$4',
             'role': 'admin',
             'name': None,
@@ -24,6 +25,13 @@ def init():
 
     file.close()
     return users
+
+
+def password_hasher(password):
+    pwd = password.encode()
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(pwd, salt)
+    return hashed
 
 
 def get_role(user):
@@ -53,10 +61,10 @@ def menu(user_role, name):
     elif user_role == 'user':
         print(f'         ***    Welcome {name}    ***')
         return [
-                'Start a game',
-                'Show your score',
-                'Edit your profile',
-                'Save and exit'
+            'Start a game',
+            'Show your score',
+            'Edit your profile',
+            'Save and exit'
         ]
 
 
@@ -190,7 +198,8 @@ def login(username, password, users):
 all_user = init()
 enter_username = input('  Enter your username: ')
 enter_password = input('  Enter your password: ')
-status, result = login(enter_username, enter_password, all_user)
+enter_password_hashed = password_hasher(enter_password)
+status, result = login(enter_username, enter_password_hashed, all_user)
 if status is False:
     print(result)
     exit()
@@ -216,10 +225,11 @@ while True:
         elif choice == '2':
             new_username = input('  Enter new username: ').lower()
             new_password = input('  Enter new user password: ')
+            new_password_hashed = password_hasher(new_password)
             while True:
                 new_role = input('  Role (User/Admin): ').lower()
                 if new_role == 'admin' or new_role == 'user':
-                    print(add_user(new_username, new_password, all_user, new_role))
+                    print(add_user(new_username, new_password_hashed, all_user, new_role))
                     break
                 print('Role not valid, Try again')
 
@@ -261,8 +271,10 @@ while True:
 
                 elif choice_edit == '4':
                     password_check = input('  Enter your password : ')
+                    password_check_hashed = password_hasher(password_check)
                     new_password = input('  Enter you new password : ')
-                    change_password(user_in_app, new_password, password_check)
+                    new_password_hashed = password_hasher(new_password)
+                    change_password(user_in_app, new_password_hashed, password_check_hashed)
 
                 elif choice_edit == '5':
                     edit_profile_save(all_user)
@@ -273,7 +285,7 @@ while True:
             save_and_exit(all_user)
             break
 
-# user panel
+    # user panel
     elif role == 'user':
         choice = input('    Enter your short key : ')
 
@@ -306,8 +318,10 @@ while True:
 
                 elif choice_edit == '4':
                     password_check = input('  Enter your password : ')
+                    password_check_hashed = password_hasher(password_check)
                     new_password = input('  Enter you new password : ')
-                    change_password(user_in_app, new_password, password_check)
+                    new_password_hashed = password_hasher(new_password)
+                    change_password(user_in_app, new_password_hashed, password_check_hashed)
 
                 elif choice_edit == '5':
                     edit_profile_save(all_user)
