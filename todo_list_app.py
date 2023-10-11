@@ -95,13 +95,13 @@ def delete_list(target_list, all_lists):
             break
 
 
-def task_tup(requst, selected_dic):
+def task_tup(request, selected_dic):
     done_list = selected_dic['done_task']
     undone_list = selected_dic['undone_task']
     all_task_list = done_list + undone_list
     dic_to_tup = []
     # show all
-    if requst == 'all':
+    if request == 'all':
         for item in all_task_list:
             task = item['task']
             id = item['id']
@@ -109,7 +109,7 @@ def task_tup(requst, selected_dic):
             dic_to_tup.append(x)
 
     # show done
-    elif requst == 'done':
+    elif request == 'done':
         for item in done_list:
             task = item['task']
             id = item['id']
@@ -117,7 +117,7 @@ def task_tup(requst, selected_dic):
             dic_to_tup.append(x)
 
     # show undone
-    elif requst == 'undone':
+    elif request == 'undone':
         for item in undone_list:
             task = item['task']
             id = item['id']
