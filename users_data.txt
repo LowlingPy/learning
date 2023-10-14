@@ -1,1 +1,1 @@
-[{"username": "milad", "password": "b'$2b$12$QiD3DeYmnd4SEAs8go7zIenUO2lbPslY13FEWvurMiQvXuel1uwkq'", "data": "2$5$4$1$9", "role": "admin", "name": "milad", "lastname": "mohammadi"}]
+[{"username": "milad", "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3", "data": "2$5$4$1$9", "role": "admin", "name": "milad", "lastname": "mohammadi"}, {"username": "satar", "password": "3bc5a81b68bec2c432a18394fb30a29890a266f9d599e1a9c8d606005902663d", "data": "0$10", "role": "user", "name": null, "lastname": null}]
