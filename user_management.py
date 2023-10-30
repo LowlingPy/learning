@@ -2,7 +2,7 @@
 
 import json
 import random
-import bcrypt
+import hashlib
 
 
 def init():
@@ -28,9 +28,10 @@ def init():
 
 
 def password_hasher(password):
-    pwd = password.encode()
-    salt = bcrypt.gensalt()
-    hashed = bcrypt.hashpw(pwd, salt)
+    h = hashlib.new('sha256')
+    bpass = password.encode()
+    h.update(bpass)
+    hashed = h.hexdigest()
     return hashed
 
 
@@ -105,7 +106,7 @@ def get_clean_users(users):
 def add_user(username, password, users, role_new):
     new_user = {}
     new_user.update(
-        {'username': username, 'password': password, 'data': None, 'role': role_new, 'name': None, 'lastname': None}
+        {'username': username, 'password': password, 'data': '0', 'role': role_new, 'name': None, 'lastname': None}
     )
     users.append(new_user)
     return f'New {role_new} ({username.capitalize()}) added '
@@ -116,17 +117,6 @@ def delete_users(users, user_will_be_deleted):
         if user['username'] == user_will_be_deleted:
             users.remove(user)
     return f'{user_will_be_deleted.capitalize()} is deleted '
-
-
-def show_users_data(users):
-    for user in users:
-        username = user['username']
-        list_of_score = user['data'].split('$')
-        sum_ = 0
-        for i in list_of_score:
-            sum_ = sum_ + int(i)
-        score = sum_ / len(list_of_score)
-        return f'{username} : {score}'
 
 
 def edit_profile_menu(login_user):
@@ -174,11 +164,9 @@ def save_and_exit(users):
 def show_score(login_user):
     if login_user['data'] is not None:
         list_of_score = login_user['data'].split('$')
-        sum_ = 0
-        for i in list_of_score:
-            sum_ = sum_ + int(i)
-        score = sum_ / len(list_of_score)
-        return f'Your score : {score}'
+        score = sum(map(int, list_of_score)) / (len(list_of_score) - 1)
+        username = login_user['username']
+        return f'{username.capitalize()} score : {score}'
     else:
         return 'You have no data'
 
@@ -244,7 +232,8 @@ while True:
                 print('user not found')
         # show user's data
         elif choice == '4':
-            print(show_users_data(all_user))
+            for user in all_user:
+                print(show_score(user))
 
         # start a game
         elif choice == '5':
@@ -295,7 +284,7 @@ while True:
 
         # show score
         elif choice == '2':
-            print(show_users_data(user_in_app))
+            print(show_score(user_in_app))
 
         # edite profile
         elif choice == '3':
