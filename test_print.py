@@ -17,7 +17,6 @@
 #     for m in range(0, i):
 #         print('*', end=' ')
 #     print()
-# #
 #
 #
 #
