@@ -1,21 +1,29 @@
 # Mahdi Mohammadi khah 982011056
 
 
-for i in range(n):
-def count_divisors(n):
-    count = 0
-    for i in range(1, n + 1):
-        if n % i == 0:
-            count += 1
-    return count
+def count_divisors(num):
+    divisors = 0
+    for i in range(1, num + 1):
+        if num % i == 0:
+            divisors += 1
+    return divisors
+
 
 def find_number_with_divisors(target_divisors):
-    number = 1
-    while True:
-        if count_divisors(number) == target_divisors:
-            return number
-        number += 1
+    num = 1
+    good_numbers = []
+    sum_ = 0
 
-input_divisor = int(input("Enter the number of divisors: "))
-result = find_number_with_divisors(input_divisor)
-print(f"The smallest number with {input_divisor} divisors is: {result}")
+    while True:
+        sum_ += num
+        good_numbers.append(sum_)
+
+        if count_divisors(good_numbers[-1]) == target_divisors:
+            return good_numbers[-1]
+
+        num += 1
+
+
+input_divisors = int(input())
+result = find_number_with_divisors(input_divisors)
+print(result)
