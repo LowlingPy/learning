@@ -2,10 +2,10 @@
 
 def longest_substring(strings):
     if not strings:
-        return ""
+        return ''
 
     longest_string = max(strings, key=len)
-    longest_common_substring = ""
+    longest_common_substring = ''
 
     for i in range(len(longest_string)):
         for j in range(i + len(longest_common_substring), len(longest_string)):
