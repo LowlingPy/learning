@@ -18,6 +18,7 @@ class Graph:
                 node_neighbors.append(str(i['node'].value) + ':' + str(i['weight']))
             print(str(node.value) + ' ---> ' + str(node_neighbors))
 
+    def
 
 class Node:
     def __init__(self, value):
