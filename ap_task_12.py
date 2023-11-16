@@ -6,9 +6,14 @@ class Person:
        self.age = age
 
 
+class Employee(Person):
+    def __init__(self, name, age):
+        super().__init__(name, age)
+        self.role = 'employee'
+
+
 name = input()
 age = input()
-
-person = Person(name, age)
-print(person.name)
-print(person.age)
+employee = Employee(name, age)
+print(employee.name)
+print(employee.age)
