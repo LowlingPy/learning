@@ -87,21 +87,21 @@
 # print(b)
 
 from datetime import datetime
-import functools
-import time
-
-
-def timer(func):
-    """Print the runtime of the decorated function"""
-    @functools.wraps(func)
-    def wrapper_timer(*args, **kwargs):
-        start_time = time.perf_counter()
-        value = func(*args, **kwargs)
-        end_time = time.perf_counter()
-        run_time = end_time - start_time
-        print(f"Finished {func.__name__}() in {run_time:.4f} secs")
-        return value
-    return wrapper_timer
+# import functools
+# import time
+#
+#
+# def timer(func):
+#     """Print the runtime of the decorated function"""
+#     @functools.wraps(func)
+#     def wrapper_timer(*args, **kwargs):
+#         start_time = time.perf_counter()
+#         value = func(*args, **kwargs)
+#         end_time = time.perf_counter()
+#         run_time = end_time - start_time
+#         print(f"Finished {func.__name__}() in {run_time:.4f} secs")
+#         return value
+#     return wrapper_timer
 
 #
 # def do_twice(func):
@@ -183,18 +183,40 @@ def timer(func):
 # m = Nothing()
 # m.a()
 
-from dataclasses import dataclass
+# from dataclasses import dataclass
+#
+#
+# @timer
+# @dataclass
+# class TimeWaster:
+#     max_num: int
+#
+#     def waste_time(self, num_times):
+#         for _ in range(num_times):
+#             i = sum([i**2 for i in range(self.max_num)])
+#         print(i)
+#
+# a = TimeWaster(100)
+# a.waste_time(100000)
 
 
-@timer
-@dataclass
-class TimeWaster:
-    max_num: int
 
-    def waste_time(self, num_times):
-        for _ in range(num_times):
-            i = sum([i**2 for i in range(self.max_num)])
-        print(i)
+from fastapi import FastAPI, Path
 
-a = TimeWaster(100)
-a.waste_time(100000)
+app = FastAPI()
+
+@app.get('/')
+async def root():
+    return {"message": "Hello World"}
+
+@app.get("/hello/{name}/{age}")
+async def hello(name:str,age:int):
+    return {"name": name, "age":age}
+@app.get("/hello")
+async def hello(name:str,age:int):
+    return {"name": name, "age":age}
+
+@app.get("/hello/{name}")
+async def hello(name:str=Path(...,min_length=3,
+max_length=10)):
+    return {"name": name}
