@@ -33,7 +33,7 @@
 # conn.close()
 # print('Connection close')
 #
-# # TODO join in SQL, Db diagram, Compelit 'todo_list_app'
+# # to_do join in SQL, Db diagram, Completed 'todo_list_app'
 #
 # import hashlib
 # password = '123'
@@ -86,7 +86,7 @@
 # b = a()
 # print(b)
 
-from datetime import datetime
+# from datetime import datetime
 # import functools
 # import time
 #
