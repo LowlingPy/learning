@@ -199,53 +199,86 @@
 # a = TimeWaster(100)
 # a.waste_time(100000)
 
-
-from fastapi import FastAPI, Path, Query
-
-app = FastAPI()
-
-
-@app.get('/')
-async def root():
-    return {"message": "Hello World"}
-
-
-# @app.get("/hello/{name}/{age}")
+#
+# from fastapi import FastAPI, Path, Query
+#
+# app = FastAPI()
+#
+#
+# @app.get('/')
+# async def root():
+#     return {"message": "Hello World"}
+#
+#
+# # @app.get("/hello/{name}/{age}")
+# # async def hello(name: str, age: int):
+# #     return {"name": name, "age": age}
+#
+#
+# @app.get("/hello")
 # async def hello(name: str, age: int):
 #     return {"name": name, "age": age}
-
-
-@app.get("/hello")
-async def hello(name: str, age: int):
-    return {"name": name, "age": age}
-
-
-@app.get("/hello/{name}")
-async def hello(name: str = Path(..., min_length=3,
-                                 max_length=10)):
-    return {"name": name}
-
-
+#
+#
+# @app.get("/hello/{name}")
+# async def hello(name: str = Path(..., min_length=3,
+#                                  max_length=10)):
+#     return {"name": name}
+#
+#
+# # @app.get("/hello/{name}/{age}")
+# # async def hello(*, name: str = Path(..., min_length=3,
+# #                                     max_length=10),
+# #                 age: int = Path(..., ge=1, le=100)):
+# #     return {"name": name, "age": age}
+#
+#
 # @app.get("/hello/{name}/{age}")
 # async def hello(*, name: str = Path(..., min_length=3,
-#                                     max_length=10),
-#                 age: int = Path(..., ge=1, le=100)):
+#                                     max_length=10), \
+#                 age: int = Path(..., ge=1, le=100), \
+#                 percent: float = Query(..., ge=0, le=100)):
 #     return {"name": name, "age": age}
+#
+#
+# from typing import List
+# from pydantic import BaseModel
+#
+#
+# class Student(BaseModel):
+#     id: int
+#     name: str
+#     subjects: List[str] = []
 
 
-@app.get("/hello/{name}/{age}")
-async def hello(*, name: str = Path(..., min_length=3,
-                                    max_length=10), \
-                age: int = Path(..., ge=1, le=100), \
-                percent: float = Query(..., ge=0, le=100)):
-    return {"name": name, "age": age}
+from typing import List, Optional
+from sqlalchemy import ForeignKey, String
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
-from typing import List
-from pydantic import BaseModel
+class Base(DeclarativeBase):
+    pass
 
 
-class Student(BaseModel):
-    id: int
-    name: str
-    subjects: List[str] = []
+class User(Base):
+    __tablename__ = "user_account"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(30))
+    fullname: Mapped[Optional[str]]
+    addresses: Mapped[List["Address"]] = relationship(
+        back_populates="user", cascade="all, delete-orphan"
+    )
+
+    def __repr__(self) -> str:
+        return f"User(id={self.id!r}, name={self.name!r}, fullname={self.fullname!r})"
+
+
+class Address(Base):
+    __tablename__ = "address"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email_address: Mapped[str]
+    user_id: Mapped[int] = mapped_column(ForeignKey("user_account.id"))
+    user: Mapped["User"] = relationship(back_populates="addresses")
+
+    def __repr__(self) -> str:
+        return f"Address(id={self.id!r}, email_address={self.email_address!r})"
