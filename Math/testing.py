@@ -49,5 +49,3 @@
 #
 # # Display top and bottom few entries for overview
 # sorted_hands_with_probabilities[:5], sorted_hands_with_probabilities[-5:]
-
-?
