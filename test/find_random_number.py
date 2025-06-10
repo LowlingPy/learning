@@ -49,7 +49,7 @@ while True:
     if choice == '3':
         print('***GOODBYE***')
         list_of_scores = [str(x) for x in list_of_scores]
-        data_score = open('data_score.txt' ,'w')
+        data_score = open('data_score.txt', 'w')
         save = '$'.join(list_of_scores)
         data_score.write(save)
         data_score.close()
